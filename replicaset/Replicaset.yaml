@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: hello
+  labels:
+    app: masterminded
+spec: 
+  replicas: 5
+  selector:
+    matchLabels:
+      app: dummy
+  template:
+    metadata:
+      labels:
+        app: dummy
+    spec:
+      containers:
+      - image: nginx
+        name: hello
+        resources:
+          limits:
+            cpu: 100m
+            memory: 200M
+          requests:
+           cpu: 50m
+           memory: 100M
+        ports:
+        - containerPort: 8080
+   
+   

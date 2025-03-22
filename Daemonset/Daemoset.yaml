@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: dell
+  labels: hello
+spec:
+  selector:
+    matchLabels: hello
+  template:
+    metadata:
+      name: dell
+      labels: hello
+    spec:
+      container: 
+      - name: jayanth
+        image: nginx
+        containerport: 
+        - protocol: TCP
+          containerPort: 8080
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hellostalker
+  labels: hello
+spec:
+  selector: apps
+  
+

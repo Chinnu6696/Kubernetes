@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mycronjob
+  labels:
+    app: mycronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    metadata:
+      name: mycronjob
+      labels:
+        app: mycronjob
+    spec:
+      template:
+        metadata:
+          name: mycronjob
+          labels:
+            app: mycronjob
+        spec:
+          containers:
+          - name: mycronjob
+            image: nginx
+            ports:
+            - containerPort: 80
+          restartPolicy: OnFailure
+          
+    
+        

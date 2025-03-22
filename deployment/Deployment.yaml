@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qualitythought
+  labels:
+    app: hello
+spec: 
+  replicas: 3
+  selector: 
+   matchLabels: 
+    app: hello
+  template:
+    metadata:
+      name: hello
+      labels:
+        app: hello
+    spec: 
+      containers: 
+      - image: nginx:1.27.4
+        name: hello
+        ports:
+        - name: nginx
+          containerPort: 80
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boat
+  labels: web
+spec:
+  selector: hello
+  ports: 
+    port: 8080
+    protocol: TCP
+
