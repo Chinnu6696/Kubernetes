@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mybooks
+  labels: 
+    app: mybooks
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mybooks
+  template:
+    metadata:
+      name: mybooks
+      labels:
+        app: mybooks
+    spec: 
+      containers:
+      - name: postgres
+        image: shaikkhajaibrahim/libuserssvc:1.0
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://user:password@user-db:5432/userdb"
+        - name:  SECRET_KEY
+          value: "YtDEVWnL35aAIP-5yxeLjAZ49R920-mMNDfwPyWULu63HFsYzo0f-LO2InxC8eu428k"
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            cpu: 700m
+            memory: 1000Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mybooks
+  labels: 
+    app: mybooks
+spec: 
+  type: ClusterIP
+  ports:
+  - port: 5432
+    protocol: TCP
+  
+  
+
+        

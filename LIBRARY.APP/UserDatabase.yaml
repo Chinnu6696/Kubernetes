@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mylibrary
+  labels:
+    app: mylibrary
+spec:
+  replicas: 2
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: mylibrary
+  template:
+    metadata:
+      name: mylibrary
+      labels:
+        app: mylibrary
+    spec:
+      containers:
+        - name: mylibrary
+          image: postgres:15-alpine
+          env:
+          - name: POSTGRES_USER
+            value: user
+          - name: POSTGRES_PASSWORD
+            value: password
+          - name: POSTGRES_DB
+            value: userdb
+          ports: 
+          - containerPort: 5432
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100M
+            limits:
+              cpu: 1000m
+              memory: 1000M
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mylibrary
+  labels:
+    app: mylibrary
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5432
+    protocol: TCP
+    
+          
+    
